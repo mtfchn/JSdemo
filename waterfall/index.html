@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .box{
+            width: 200px;
+            padding-left: 20px;
+            padding-top: 20px;
+            float: left;
+
+        }
+        .pic{
+            overflow: hidden;
+        }
+        .pic img{
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(1).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(2).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(3).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(4).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(5).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(6).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(7).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(8).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(9).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(10).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(11).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(12).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(13).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(14).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(15).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(16).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(17).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(18).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(19).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(20).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(21).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(22).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(23).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(24).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(25).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(26).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(27).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(28).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(29).jpg" alt=""></div>
+    </div>
+    <div class="box">
+        <div class="pic"><img src="./imgs/img(30).jpg" alt=""></div>
+    </div>
+</div>
+
+<script>
+    function wallterFall(){
+        var boxs = document.querySelectorAll('.box');
+        var cloCount = Math.floor(window.innerWidth / boxs[0].offsetWidth);
+        var heightArr = [];
+        var minHeight,minIndex;
+        for(var i = 0;i < boxs.length;i++){
+            if(i < cloCount){
+                heightArr.push(boxs[i].offsetHeight);
+            }else{
+                minHeight = Math.min.apply(Math,heightArr);
+                minIndex = heightArr.indexOf(minHeight);
+                boxs[i].style.position = 'absolute';
+                boxs[i].style.left = minIndex * boxs[0].offsetWidth + 'px';
+                boxs[i].style.top = minHeight + 'px';
+                heightArr[minIndex] += boxs[i].offsetHeight;
+            }
+        }
+    }
+    window.onload = function(){
+        wallterFall();
+    }
+
+    window.onscroll = function () {
+        var isLoading = false;
+        console.log('window.onscroll');
+
+
+        function needLoad (){
+            if(isLoading){
+                return false;
+            }
+            var lastBox = document.querySelector('.box:last-of-type');
+            var offsetTop = lastBox.offsetTop;
+            var screenHeight = window.innerHeight;
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            return scrollTop + screenHeight > offsetTop;
+        }
+
+        function loadDate (){
+            isLoading = true;
+            var count = 0;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('get','./imgs.json',true);
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState!==4){
+                    return
+                }
+                if(xhr.status >= 200 && xhr.status <= 300){
+                    var imgs = JSON.parse(xhr.responseText);
+                    for(var i = 0;i < imgs.length; i++){
+                        createBox(imgs[i].src);
+                    }
+                }
+            }
+            xhr.send();
+
+            function createBox(src){
+                var box = document.createElement('div');
+                box.className = 'box';
+                var pic = document.createElement('div');
+                pic.className = 'pic';
+                var img = document.createElement('img');
+                img.src = src
+                img.onload = img.onerror = function(){
+                    count++;
+                    if(count === 99){
+                        isLoading = false;
+                    }
+                    wallterFall();
+                }
+                pic.appendChild(img);
+                box.appendChild(pic);
+                document.querySelector('.content').appendChild(box);
+            }
+        }
+        if(needLoad()){
+           loadDate();
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: #eee;
+}
+
+.all {
+    height: 480px;
+    width: 500px;
+    border: 3px solid #ccc;
+    position: relative;
+    overflow: hidden;
+    margin: 50px auto;
+}
+
+.bg {
+    background: url("../resource/imgs/bg.jpg") repeat-x 0 0;
+    height: 480px;
+    width: 1000px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.number {
+    width: 60px;
+    height: 60px;
+    font-size: 50px;
+    text-align: center;
+    line-height: 60px;
+    font-weight: 600;
+    position: absolute;
+    top: 20px;
+    left: 200px;
+    z-index: 10;
+    color: #fff;
+}
+
+.bird {
+    height: 26px;
+    width: 40px;
+    position: absolute;
+    left: 100px;
+    top: 200px;
+    background-image: url("../resource/imgs/bird0.png");
+}
+
+.boxup, .boxdown {
+    position: absolute;
+    width: 62px;
+    background: #0edd00;
+}
+
+.boxup {
+    background: url("../resource/imgs/up_pipe.png") no-repeat bottom,
+    url("../resource/imgs/up_mod.png") repeat-Y 0 0;
+}
+
+.boxdown {
+    background: url("../resource/imgs/down_pipe.png") no-repeat top,
+    url("../resource/imgs/down_mod.png") repeat-Y 0 0;
+}
+
+.pop-ups {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: #CDCD00;
+    left: 200px;
+    top: 200px;
+    font-size: 30px;
+    text-align: center;
+    line-height: 200px;
+    z-index: 10;
+    border-radius: 10px;
+}
+.pop-ups div{
+    height:100px;
+    width: 200px;
+    text-align: center;
+    line-height: 100px;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+

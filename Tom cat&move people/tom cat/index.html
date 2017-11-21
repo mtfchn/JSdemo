@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script type="text/javascript" src="js/jquery-3.2.1.js" ></script>
+		<link rel="stylesheet" type="text/css" href="css/new_file.css"/>
+		<script type="text/javascript">
+			jQuery().ready(function(){
+				$(".scratch").on("click",function(){
+					zhuazi();
+					var action_music = "raw/scratch_kratzen.wav"
+					$(".music").attr("src",action_music)
+				});
+				
+				$(".eat").on("click",function(){
+					chiniao();
+					var action_music = "raw/p_eat.wav"
+					$(".music").attr("src",action_music)
+				});
+				
+				$(".cymbal").on("click",function(){
+					qiaoluo();
+					var action_music = "raw/cymbal.wav"
+					$(".music").attr("src",action_music)
+				});
+				$(".pie").on("click",function(){
+					rengpai();
+					var action_music = "raw/splat_05.wav"
+					$(".music").attr("src",action_music)
+				});
+				$(".fart").on("click",function(){
+					fangpi();
+					var action_music = "raw/fart003_11025.wav"
+					$(".music").attr("src",action_music)
+				});
+				$(".drink").on("click",function(){
+					drinkMilk();
+					var action_music = "raw/p_drink_milk.wav"
+					$(".music").attr("src",action_music)
+				});
+			
+			});
+			var timer;
+			var actionPicture_num = 0;
+			//拼接动作图片序列号；
+			function pinjie(num){
+				if(num<10){
+					return "0"+num;
+				}
+				else{
+					return num;
+				}
+			}
+			//实现生气
+			function zhuazi(){
+				clearInterval(timer);
+				timer = setInterval(function(){
+					if(actionPicture_num<55){
+						actionPicture_num++;
+						var action_pic = "Animations/scratch/scratch_"+pinjie(actionPicture_num)+".jpg";
+						$(".tom").attr("src",action_pic)
+					}
+					else{
+						clearInterval(timer);
+						actionPicture_num = 0
+					}
+				},70);
+			}
+			//实现吃鸟
+			function chiniao(){
+				clearInterval(timer);//每一次点击按钮的时候都清除一下上一次的定时器，免动画效果冲突	
+				timer = setInterval(function(){//声明一个定时器
+					if(actionPicture_num<39){//如果这个动作图片的序号数少于这一组图片的总数的话
+						var chiniao_pic = "Animations/eat/eat_"+pinjie(actionPicture_num)+".jpg";
+						//用定时器的效果来训话这一组图片,,定义一个变量，地址的图片部分的数字设置成可变的
+						$(".tom").attr('src',chiniao_pic)
+						//将这张图片显示在屏幕中间的div上
+
+						actionPicture_num++
+					}
+					else{
+						//当这组图片循环完毕了，清除一下定时器，并且把序号归零
+
+						clearInterval(timer);
+						actionPicture_num = 0;
+					}
+				},70);
+			}
+			//实现敲锣
+			function qiaoluo(){
+				clearInterval(timer);
+				timer = setInterval(function(){
+					if(actionPicture_num<13){
+						var qiaoluo_pic = "Animations/cymbal/cymbal_"+pinjie(actionPicture_num)+".jpg";
+						$(".tom").prop("src",qiaoluo_pic);
+						actionPicture_num++
+						
+					}
+					else{
+						clearInterval(timer);
+						actionPicture_num = 0;
+					}
+				},70);
+			}
+			//实现扔派；
+			function rengpai(){
+				clearInterval(timer);
+				timer = setInterval(function(){
+					if(actionPicture_num<24){
+						var rengpai_pic = "Animations/pie/pie_"+pinjie(actionPicture_num)+".jpg"
+						$(".tom").attr('src',rengpai_pic);
+						actionPicture_num++;
+					}
+					else{
+						clearInterval(timer);
+						actionPicture_num = 0;
+					}
+					
+				},70)
+			}
+			//实现放屁
+			function fangpi(){
+				clearInterval(timer);
+				timer = setInterval(function(){
+					if(actionPicture_num<27){
+						var fangpi_pic = "Animations/fart/fart_"+pinjie(actionPicture_num)+".jpg"
+						$(".tom").attr("src",fangpi_pic);
+						actionPicture_num ++ ;
+					}
+					else{
+						clearInterval(timer);
+						actionPicture_num = 0;
+					}
+				},70);
+			}
+			//实现喝牛奶
+			function drinkMilk (){
+				clearInterval(timer);
+				timer = setInterval(function(){
+					if(actionPicture_num<80){
+						var drink_pic = "Animations/drink/drink_"+pinjie(actionPicture_num)+".jpg";
+						$(".tom").prop("src",drink_pic);
+						actionPicture_num ++;
+					}
+					else{
+						clearInterval(timer);
+						actionPicture_num = 0;
+					}
+				},70)
+				
+				
+			}
+		</script>
+		
+	</head>
+
+	<body>
+		<center>
+			<div class="content">
+				<img src="Animations/angry/angry_00.jpg" class="tom" />
+				<img src="Buttons/scratch/scratch.png" class="scratch" />
+				<img src="Buttons/cymbal/cymbal.png" class="cymbal" />
+				<img src="Buttons/drink/drink.png" class="drink" />
+				<img src="Buttons/fart/fart.png" class="fart" />
+				<img src="Buttons/pie/pie.png" class="pie" />
+				<audio class="music" autoplay="autoplay"></audio>
+				<img src="Buttons/eat/eat.png" class="eat" />
+			</div>
+		</center>
+	</body>
+
+</html>

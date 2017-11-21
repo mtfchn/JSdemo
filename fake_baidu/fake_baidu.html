@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Baidu</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            overflow: hidden;
+            background: url("./images/fakeBaiduBG.jpg");
+            background-size: cover;
+        }
+
+        ul {
+            list-style: none;
+            /*background: #fff;*/
+        }
+
+        .search {
+            height: 40px;
+            width: 600px;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        .search .input {
+            float: left;
+            height: 38px;
+            width: 498px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            line-height: 38px;
+            background: rgba(255, 255, 255, .5);
+        }
+
+        .search .button {
+            float: left;
+            height: 40px;
+            width: 100px;
+            background: #3388ff;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            line-height: 40px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .search .button:hover {
+            background: #317ef3;
+        }
+
+        .search ul {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 500px;
+            background: rgba(255, 255, 255, .5);
+            border: 1px solid #ccc;
+            display: none;
+        }
+
+        .search ul li {
+            height: 25px;
+            line-height: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .search ul .change {
+            background: rgba(248, 248, 248, .5);
+        }
+
+        .logo {
+            height: 136px;
+            width: 420px;
+            display: block;
+            margin: 50px auto;
+        }
+    </style>
+</head>
+<body>
+<a href="./fake_baidu.html" class="logo">
+    <img src="./images/baidulogo.png">
+</a>
+<div class="search">
+    <input type="text" class="input">
+    <ul></ul>
+    <input type="text" value="百度一下" class="button">
+</div>
+
+
+<script>
+    //https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=自习室&cb=qianfengGetData
+    document.querySelector('.search .input').onkeyup = function (evt) {
+        var e = evt || window.event;
+        if (e.keyCode !== 38 && e.keyCode !== 40) {
+            var value = this.value;
+            getList(value);
+        }
+    }
+
+    function getList(wd) {
+        var script = document.createElement('script');
+        script.id = 'jsonp';
+        script.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?cb=hotSearch&wd=' + wd;
+        document.body.appendChild(script);
+    }
+
+    function hotSearch(data) {
+        var input = document.querySelector('.search .input');
+        input.index = -1;
+        var inputContent = document.querySelector('.search .input').value;
+        var oldScript = document.querySelector('#jsonp');
+        oldScript.parentNode.removeChild(oldScript);
+        var ul = document.querySelector('.search ul');
+        ul.innerHTML = '';
+        ul.style.display = 'none';
+        var li;
+        for (var i = 0; i < data.s.length; i++) {
+            ul.style.display = 'block';
+            li = document.createElement('li');
+            li.innerHTML = data.s[i];
+            li.onclick = function () {
+                location.href = 'https://www.baidu.com/s?wd=' + this.innerHTML;
+            }
+            //键盘事件
+            input.onkeydown = function (evt) {
+                var e = evt || window.event;
+                //下 40；上 38 ; 回车 13
+                var lis = document.querySelectorAll('.search ul li');
+
+                if (e.keyCode === 38) {
+                    //往上
+                    if (this.index >= 0 && this.index < lis.length) {
+                        lis[this.index].className = '';
+                    }
+                    this.index--;
+                    if (this.index < 0) {
+                        this.index = -1;
+                        input.value = inputContent;
+                    } else {
+                        input.value = lis[this.index].innerHTML;
+                        lis[this.index].className = 'change';
+                    }
+                    if (lis.length === 0) {
+                        return;
+                    }
+                }
+                if (e.keyCode === 40) {
+                    //往下
+                    if (this.index >= 0 && this.index < lis.length) {
+                        lis[this.index].className = '';
+                    }
+                    this.index++;
+                    if (this.index > lis.length - 1) {
+                        this.index = lis.length;
+                        input.value = inputContent;
+                    } else {
+                        input.value = lis[this.index].innerHTML;
+                        lis[this.index].className = 'change';
+                    }
+                    if (lis.length === 0) {
+                        return;
+                    }
+                }
+
+                if (e.keyCode === 13) {
+                    var value = document.querySelector('.search .input').value;
+                    location.href = 'https://www.baidu.com/s?wd=' + value;
+                }
+            }
+            ul.appendChild(li);
+            //鼠标事件
+            var lis = document.querySelectorAll('.search ul li');
+            for (var j = 0; j < lis.length; j++) {
+                lis[j].index = j;
+                lis[j].onmouseover = function () {
+                    if (document.querySelector('.search ul .change')) {
+                        document.querySelector('.search ul .change').className = '';
+                    }
+                    lis[this.index].className = 'change';
+                }
+                lis[j].onmouseout = function () {
+                    lis[this.index].className = '';
+                }
+            }
+        }
+    }
+
+    document.querySelector('.search .button').onclick = function () {
+        var value = document.querySelector('.search .input').value;
+        location.href = 'https://www.baidu.com/s?wd=' + value;
+    }
+
+
+</script>
+</body>
+</html>

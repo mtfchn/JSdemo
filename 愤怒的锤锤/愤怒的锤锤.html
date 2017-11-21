@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            height: 0;
+        }
+        body,html{
+            background: #000;
+            height: 100%;
+             width:100%;
+            cursor: none;
+        }
+        #Hammer{
+            width: 100px;
+            height: 110px;
+            background: url("images/timg.png") no-repeat center;
+            background-size: 100%;
+            position: absolute;
+            z-index: 2;
+        }
+        .bombs{
+            width: 150px;
+            height: 150px;
+            background: url("images/bomb.png");
+            background-size: 100%;
+            position: absolute;
+            transition: opacity 1s;
+        }
+        #none{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="Hammer"></div>
+    <!-- <div id="none" class="bombs"></div> -->
+<script>
+    var hammer = document.querySelector('#Hammer');
+    var i = 0;
+    window.onmousemove = function (evt) { //锤子的移动
+        var e = evt || window.event;
+        hammer.style.left = e.clientX + 'px';
+        hammer.style.top = e.clientY - 120 + 'px';
+    };
+
+    window.onmousedown = function (evt) { //锤子砸下的爆炸效果
+        var e = evt || window.event;
+        var bombs = document.createElement('div');
+        hammer.style.transform = 'rotate(-50deg)'; //点击鼠标 锤子砸下的动作效果
+        hammer.style.transformOrigin = 80 + 'px' + ' ' + 80 + 'px';//指定中心点位置
+        bombs.className = 'bombs';
+        bombs.style.left = e.clientX - 75 + 'px'; //爆炸位置移到鼠标中间
+        bombs.style.top = e.clientY - 75 + 'px';
+        document.body.appendChild(bombs);
+        window.onmouseup = function () {
+            hammer.style.transform = '';
+            bombs.style.opacity = '0';
+            setTimeout (function () {       //1秒后清除
+                bombs.parentNode.removeChild(bombs);
+            } ,1000)
+        };
+        i++;
+        if(i>=10){
+            document.body.style.background = "url(images/b1.jpg) no-repeat center";
+            document.body.style.backgroundSize = "100%";
+        }
+        if(i>=20){
+            document.body.style.background = "url(images/b2.jpg) no-repeat center";
+            document.body.style.backgroundSize = "100%";
+        }
+        if(i>=30){
+            document.body.style.background = "url(images/b3.jpg) no-repeat center";
+            document.body.style.backgroundSize = "contain";
+        }
+        if(i===40){
+        	document.body.style.background = "#000";
+        	i=0;
+        }
+    };
+</script>
+</body>
+</html>

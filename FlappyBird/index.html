@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlappyBird</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+<div class="all">
+    <div class="bg"></div>
+    <div class="number">0</div>
+    <div class="bird"></div>
+</div>
+<script src="js/bird.js"></script>
+<script src="js/blocks.js"></script>
+<script src="js/ImpactChecking.js"></script>
+<script>
+    var all = document.querySelector('.all');
+    var bird = document.querySelector('.bird');
+
+    function birdAndBox() {
+        var idBirdMove = setInterval(function () {
+            birdFall();
+            if (bird.offsetTop >= all.offsetHeight - bird.offsetHeight - 57) {//鸟掉到地面游戏结束
+                clearInterval(idBirdMove);
+                over();
+            }
+        }, 40);
+        document.querySelector('.all').onclick = function () {
+            speed = -10;//点击速度改变
+        };
+        var newBox = new box();
+        newBox.boxOne();//初始产生一对水管
+        newBox.moveBox();
+        var idMoveBox = setInterval(function () {//每1.2秒产生新水管
+            boxNew()
+        }, 1200);
+
+        function boxNew() {
+            var newBox = new box();
+            newBox.boxOne();
+            newBox.moveBox();
+            if (bird.offsetTop >= all.offsetHeight - bird.offsetHeight - 57) {
+                clearInterval(idMoveBox);
+            }
+        }
+
+        //碰撞检测
+        var Check = setInterval(function () {
+            var boxups = document.querySelectorAll('.boxup');
+            var boxdowns = document.querySelectorAll('.boxdown');
+            for (var i = 0; i < boxups.length; i++) {
+                if (check_box_collision(bird, boxups[i])) {
+                    clearInterval(idBirdMove);
+                    clearInterval(idMoveBox);
+                    over();
+                }
+            }//碰上水管
+            for (var i = 0; i < boxdowns.length; i++) {
+                if (check_box_collision(bird, boxdowns[i])) {
+                    clearInterval(idBirdMove);
+                    clearInterval(idMoveBox);
+                    over();
+                }
+            }//碰下水管
+        }, 10)
+    }
+
+    //判定游戏开始
+    function start() {
+        var start = document.createElement('button');
+        start.innerHTML = 'START';
+        start.className = 'pop-ups';
+        all.appendChild(start);
+        start.onclick = function () {
+            all.removeChild(start);
+            birdAndBox();
+            num();
+            bgMove();
+            wing();
+        }
+
+    }
+
+    start();
+
+    //判定游戏结束
+    function over() {
+        var over = document.createElement('button');
+        over.className = 'pop-ups gameover';
+        var divup = document.createElement('div');
+        divup.innerHTML = 'GAME OVER';
+        over.appendChild(divup);
+        var divbottom = document.createElement('div');
+        divbottom.innerHTML = 'SCORE：' + document.querySelector('.number').innerHTML;
+        over.appendChild(divbottom);
+        all.appendChild(over);
+        over.onclick = function () {//点击刷新界面
+            start();
+            location.reload();
+        }
+    }
+
+    //小鸟翅膀挥动
+    function wing() {
+        var arr = ['url("./resource/imgs/bird0.png")', 'url("./resource/imgs/bird1.png")'];
+        bird.style.backgroundImage = arr[0];
+        var wingChange = setInterval(function () {
+            if (bird.style.backgroundImage === arr[0]) {
+                bird.style.backgroundImage = arr[1];
+            } else if (bird.style.backgroundImage === arr[1]) {
+                bird.style.backgroundImage = arr[0]
+            }
+            if (document.querySelector('.gameover') !== null) {
+                clearInterval(wingChange);
+            }
+        }, 150)//0.15s切换一次图片
+    }
+
+    //背景图移动
+    function bgMove() {
+        var movebg = setInterval(function () {
+            var bg = document.querySelector('.bg');
+            bg.style.left = bg.offsetLeft - 8 + 'px';
+            if (bg.offsetLeft <= -500) {
+                bg.style.left = 0 + 'px';
+            }
+            if (document.querySelector('.gameover') !== null) {
+                clearInterval(movebg);
+            }
+        }, 50)
+    }
+
+
+    //计分板
+    function num() {
+        var number = document.querySelector('.number');
+        var numberNew = 0;
+        var numAdd = setInterval(function () {
+            var boxups = document.querySelectorAll('.boxup');
+            for (var i = 0; i < boxups.length; i++) {
+                var boxy = boxups[i].offsetLeft;
+                if (boxy > bird.offsetLeft - boxups[i].offsetWidth / 2 &&
+                    boxy < bird.offsetLeft + boxups[i].offsetWidth / 2) {
+                    numberNew++
+                    number.innerHTML = Math.floor(numberNew / 20);
+                }
+                if (document.querySelector('.gameover') !== null) {
+                    clearInterval(numAdd);//游戏结束，结束计分
+                }
+            }
+        }, 20)
+    }
+
+
+</script>
+</body>
+</html>

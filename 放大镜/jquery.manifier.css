@@ -1,0 +1,52 @@
+.magnifier {
+    position: relative;
+}
+
+.magnifier .left {
+    margin-left: 50px;
+    border: 5px solid hotpink;
+    display: inline-block;
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    left: 0;
+    top: 0;
+}
+
+.magnifier .left img {
+    width: 200px;
+    height: 200px;
+}
+
+.magnifier .left .float {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.magnifier .left .mask {
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.magnifier .right {
+    width: 400px;
+    height: 400px;
+    background: url('./img/zuanjie10.jpg') no-repeat;
+    background-size: 400%;
+    border: 5px solid hotpink;
+    display: none;
+    position: absolute;
+    left: 300px;
+    top: 0;
+}

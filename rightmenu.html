@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#box{
+			width: 150px;
+			height: 180px;
+			background: #ccc;
+			position: absolute;
+			left: 0;
+			margin: 0;
+			display: none;
+		}
+		li{
+			list-style: none;
+			width: 150px;
+			height: 60px;
+			text-align: center;
+			line-height: 60px;
+		}
+		a{
+			text-decoration: none;
+			color: black;
+			display: block;
+		}
+		a:hover{
+			background: red;
+		}
+	</style>
+</head>
+<body>
+<div id="box">
+	<ul>
+		<li><a href="#" id="a1">锦囊一</a></li>
+		<li><a href="#" id="a2">锦囊二</a></li>
+		<li><a href="#" id="a3">锦囊三</a></li>
+	</ul>
+</div>
+<script type="text/javascript">
+	var box = document.querySelector('#box');
+	document.oncontextmenu = function(evt){
+		evt.preventDefault();  
+		var e = evt || window.event;
+		box.style.left = e.clientX + 'px';
+		box.style.top = e.clientY + 'px';
+		box.style.display = 'block';
+	}
+	document.onclick = function(){
+		box.style.display = 'none';
+	}
+	box.onmousemove = function(){
+		box.style.display = 'block';
+	}
+	box.onmouseout = function(){
+		box.style.display = 'none';
+	}
+	var a1 = document.querySelector('#a1')
+	var a2 = document.querySelector('#a2')
+	var a3 = document.querySelector('#a3')
+	a1.onclick = function(){
+		alert('找他娘')
+	}
+	a2.onclick = function(){
+		alert('抓他妹')
+	}
+	a3.onclick = function(){
+		alert('跑')
+	}
+</script>
+
+</script>
+</body>
+</html>

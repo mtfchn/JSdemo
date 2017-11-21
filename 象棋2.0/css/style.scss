@@ -1,0 +1,92 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+
+/*
+ chessboard size 
+ * */
+
+$c_width:481px;
+$c_height:540px;
+
+/*
+ piece size 
+ * */
+
+$p_width:80px;
+$p_height:80px;
+.wall {
+    width: 600px;
+    height: 635px;
+    position: relative;
+    margin: 0 auto;
+    background: #FFFCC7;
+//  overflow: hidden;
+    .title {
+        text-align: center;
+        color: #9E1334;
+        letter-spacing: 20px;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+    }
+    .chessboard {
+        width: $c_width;
+        height: $c_height;
+        //      background: red;
+        position: relative;
+        margin: 20px auto;
+//      span.prompt{
+//          background-color: rgba(198,72,96,0.8) !important;
+//      }
+        div:hover {
+            opacity: .8;
+        }
+        div.selected{
+            background: #AA081D !important;
+        }
+        .river {
+            @extend .title;
+            position: absolute;
+            left: 0px;
+            height: $p_height;
+            line-height: $p_height;
+            top: $c_height / 2 - $p_height/2;
+            width: 100%;
+        }
+        #canvas {
+            background: #FFFCC7;
+            position: absolute;
+            left: ($c_width - 480)/2;
+            top: ($c_height - 540)/2;
+            ;
+        }
+    }
+}
+#mark{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0px;
+    margin: 0px;
+    background: rgba(0,0,0,.8);
+    z-index: 100000;
+    display: none;
+    p{
+        width: 500px;
+        height: 150px;
+        border-radius: 20px;
+        background: white;
+        text-align: center;
+        line-height: 150px;
+        font-size: 60px;
+        position: absolute;
+        left: 50%;
+//      top: 50%;
+        top:-200px;
+        margin-left: -250px;
+        margin-top: -75px;
+    }
+}

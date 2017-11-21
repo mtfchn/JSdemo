@@ -1,0 +1,69 @@
+* {
+  padding: 0px;
+  margin: 0px; }
+
+/*
+ chessboard size 
+ * */
+/*
+ piece size 
+ * */
+.wall {
+  width: 600px;
+  height: 635px;
+  position: relative;
+  margin: 0 auto;
+  background: #FFFCC7; }
+  .wall .title, .wall .chessboard .river {
+    text-align: center;
+    color: #9E1334;
+    letter-spacing: 20px;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none; }
+  .wall .chessboard {
+    width: 481px;
+    height: 540px;
+    position: relative;
+    margin: 20px auto; }
+    .wall .chessboard div:hover {
+      opacity: .8; }
+    .wall .chessboard div.selected {
+      background: #AA081D !important; }
+    .wall .chessboard .river {
+      position: absolute;
+      left: 0px;
+      height: 80px;
+      line-height: 80px;
+      top: 230px;
+      width: 100%; }
+    .wall .chessboard #canvas {
+      background: #FFFCC7;
+      position: absolute;
+      left: 0.5px;
+      top: 0px; }
+
+#mark {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0px;
+  margin: 0px;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 100000;
+  display: none; }
+  #mark p {
+    width: 500px;
+    height: 150px;
+    border-radius: 20px;
+    background: white;
+    text-align: center;
+    line-height: 150px;
+    font-size: 60px;
+    position: absolute;
+    left: 50%;
+    top: -200px;
+    margin-left: -250px;
+    margin-top: -75px; }
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>画圆</title>
+	<meta charset="utf-8">
+		<style type="text/css">
+			#myCanvas{
+				border:1px solid #333;
+			}
+			div {
+				background: red;
+			}
+		</style>
+</head>
+<body>
+
+	<canvas id="myCanvas" width="1200" height="500">
+		浏览器不支持canvas
+	</canvas>
+	<!-- <div width=100 height=100></div> -->
+	<button onclick="actiondo()">点击画圆</button>
+<script>
+	var canvas = document.getElementById('myCanvas');
+	var ctx = canvas.getContext('2d');//声明为2d画图
+	//startAngle===>起始角
+	//endAngle===>结束角
+	//
+	var step,startAngle,endAngle,add = Math.PI*2/100;
+
+	ctx.shadowOffsetX = 0;//设置阴影水平位移
+	ctx.shadowOffsetY = 0;//设置阴影垂直位移
+	ctx.shadowBlur = 10;//设置阴影透明度
+	ctx.lineWidth = 1;//当前线条的宽度
+	//counterClockwise:规定应该是逆时针绘图还是顺时针画图，false顺时针 true逆时针
+	counterClockwise = false;//逆时针旋转
+	var x;
+	var y;
+	var radius;
+	var name;
+	var animation_interval = 20 , n = 100; //动画间隔
+
+	function actiondo(){
+
+		step = 1,
+		startAngle = 0;
+		ctx.strokeStyle = '#'+('000000'+(Math.random()*0x1000000).toString(16)).slice(-6);//圆圈颜色
+		ctx.shadowColor = '#'+('000000'+(Math.random()*0x1000000).toString(16)).slice(-6);//设置阴影颜色
+		x = Math.floor(Math.random()*1000+100);
+		y = Math.floor(Math.random()*100+100);
+		radius = Math.floor(Math.random()*50+50);
+
+		name = setInterval(animation, animation_interval);
+	};
+
+	var animation = function(){
+		if ( step <= n){
+			endAngle = startAngle + add;
+			drawArc(startAngle,endAngle);
+			startAngle = endAngle;
+			step++;
+		}else{
+			clearInterval(name);
+		}
+
+	};
+
+	function drawArc (s,e){
+		ctx.beginPath();
+		//s==>起始角   e===>结束角  
+		ctx.arc(x, y, radius, s, e, counterClockwise);
+		ctx.lineWidth = 1;
+		ctx.stroke();
+	}
+
+</script>
+</body>
+</html>

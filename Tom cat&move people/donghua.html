@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div{
+	     width: 100px;
+	     height: 160px;
+	     overflow: hidden;    /*隐藏超出范围的图片*/
+	    }
+	</style>
+</head>
+<body>
+	<div id="mydiv"></div> 
+	<script>
+		var mydiv=document.getElementById("mydiv");       //获取div的id
+		var mydivtop=0;
+		var mydivleft=0;
+
+		var img=new Image();                //建立图片对象                 
+		img.src="莎莎.png";               //引入图片地址
+		mydiv.appendChild(img);             //将图片添加到div中
+
+		var arr=new Array(8);               //建立数组，等下图片动态循环用到
+		var arrst=new Array(8);
+		var j=k=m=n=0;
+		//按下down
+function godown(){                      
+    for(var i=0;i<arrst.length;i++){                
+        if (j==700) {                           //图片每循环到第八张，设置回到第一张
+            j=0;
+        }               
+        arr[i]=-j+"px";                         //图片的偏移像素
+        arrst[i]=arr[i].toString();             //将arr数组转为字符串，获取到当前人物图片的偏移像素
+        j=j+100;                                //每一个人物动作相隔100px
+        drawdown();                             //重绘人物动作效果
+        return arrst[i];                        //返回人物当前循环显示的图片
+    }   
+    function drawdown(){
+        img.style.marginTop="0px";              //第一组人物图片距离div顶端为0
+        img.style.marginLeft=arrst[i];          //一组人物8个动作中每个动作距离div左边像素
+        mydivtop=mydivtop+10;                   //每按下一次down，div向下偏移10px
+        mydiv.style.marginTop=mydivtop+"px";
+
+    }
+}
+//然后是按下键盘左、右、上箭头的效果，代码基本一样，仅需改动人物的走动方向：
+
+//按下left
+	function goleft(){
+	    for(var i=0;i<arrst.length;i++){                
+	        if (k==700) {
+	            k=0;
+	        }               
+	        arr[i]=-k+"px";
+	        arrst[i]=arr[i].toString();
+	        k=k+100;
+	        drawleft();
+	        return arrst[i];
+	    }
+	    function drawleft(){
+	        img.style.marginTop="-165px";           //第二组动作离div顶端165px
+	        img.style.marginLeft=arrst[i];
+	        mydivleft=mydivleft-10;                 //每按下一次left，div向左偏移10px
+	        mydiv.style.marginLeft=mydivleft+"px";  
+
+	    }
+	}
+
+	//按下right
+	function goright(){             
+	    for(var i=0;i<arrst.length;i++){                
+	        if (m==700) {
+	            m=0;
+	        }               
+	        arr[i]=-m+"px";
+	        arrst[i]=arr[i].toString();
+	        m=m+100;
+	        drawright();
+	        return arrst[i];
+	    }
+	    function drawright(){
+	        img.style.marginTop="-330px";           //第三组离div顶端165px * 2 = 330px
+	        img.style.marginLeft=arrst[i];  
+	        mydivleft=mydivleft+10;                 //每按下一次right，div向右偏移10px
+	        mydiv.style.marginLeft=mydivleft+"px";
+
+	    }
+	}
+	//按下up
+	function goup(){
+	    for(var i=0;i<arrst.length;i++){                
+	        if (n==700) {
+	            n=0;
+	        }               
+	        arr[i]=-n+"px";
+	                arrst[i]=arr[i].toString();
+	        n=n+100;
+	        drawup();
+	        return arrst[i];
+	    }
+	    function drawup(){
+	        img.style.marginTop="-495px";           //第四组离div顶端165px * 3 = 495px
+	        img.style.marginLeft=arrst[i];  
+	        mydivtop=mydivtop-10;                   //每按下一次up，div向上偏移10px
+	        mydiv.style.marginTop=mydivtop+"px";    
+	    }
+	}
+	document.onkeydown=function mykeyDown(e){  
+     e = e||event;  
+     switch(e.keyCode){
+     case 37:goleft();break;            //左箭头的ASCLL码为37
+     case 38:goup();break;              //上箭头的ASCLL码为38
+     case 39:goright();break;           //右箭头的ASCLL码为39
+     case 40:godown();break;            //下箭头的ASCLL码为40
+     }  
+} 
+	</script>
+</body>
+</html>

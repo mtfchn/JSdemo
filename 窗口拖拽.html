@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            background: pink;
+            position: absolute;
+        }
+
+        .box .right {
+            width: 5px;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: hotpink;
+            cursor: ew-resize;
+        }
+        .box .left {
+            width: 5px;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: hotpink;
+            cursor: ew-resize;
+        }
+        .box .top {
+            width: 100%;
+            height: 5px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: hotpink;
+            cursor:ns-resize;
+        }
+        .box .bottom {
+            width: 100%;
+            height: 5px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            background: hotpink;
+            cursor: ns-resize;
+        }
+        .box .right_top{
+            width: 10px;
+            height: 10px;
+            background: black;
+            position: absolute;
+            right: 0;
+            top: 0;
+            cursor: ne-resize;
+        }
+        .box .right_bottom{
+            width: 10px;
+            height: 10px;
+            background: black;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            cursor: nw-resize;
+        }
+        .box .left_top{
+            width: 10px;
+            height: 10px;
+            background: black;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: nw-resize;
+        }
+        .box .left_bottom{
+            width: 10px;
+            height: 10px;
+            background: black;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            cursor: ne-resize;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>可拖拽窗口</h2>
+    <div class="right"></div>
+    <div class="left"></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
+    <div class="right_top"></div>
+    <div class="right_bottom"></div>
+    <div class="left_top"></div>
+    <div class="left_bottom"></div>
+</div>
+
+<script>
+    var div = document.querySelector('.box');
+    var h2 = document.querySelector('h2');
+    h2.onmousedown = function (evt) {
+        var e = evt || window.event;
+        var downX = e.clientX;
+        var downY = e.clientY;
+        var downLeft = div.offsetLeft;
+        var downTop = div.offsetTop;
+
+
+        window.onmousemove = function (evt) {
+            var e = evt || window.event;
+            var diffX = e.clientX - downX;
+            var diffY = e.clientY - downY;
+            div.style.left = downLeft + diffX + 'px';
+            div.style.top = downTop + diffY + 'px';
+            return false;
+        }
+
+        window.onmouseup = function () {
+            window.onmousemove = null;
+            window.onmouseup = null;
+            return false;
+        }
+        return false;
+    }
+
+    function resizeRight() {
+        var right = document.querySelector('.right');
+        right.onmousedown = function (evt) {
+            console.log('onmousedown')
+            var e = evt || window.event;
+            e.stopPropagation();
+            var downX = e.clientX;
+            var downWith = div.offsetWidth;
+
+            window.onmousemove = function (evt) {
+                var e = evt || window.event;
+                var differX = e.clientX - downX;
+                div.style.width = downWith + differX + 'px';
+                if(parseInt(div.style.width) <= 200){
+                    div.style.width = 200 + 'px';
+                }
+                return false;
+            }
+            window.onmouseup = function () {
+                window.onmousemove = null;
+                window.onmouseup = null;
+                return false;
+
+            }
+            return false;
+        }
+
+    }
+
+    function resizeLeft() {
+        var left = document.querySelector('.left');
+        left.onmousedown = function (evt) {
+            var e = evt || window.event;
+            e.stopPropagation();
+            var downX = e.clientX;
+            var downWith = div.offsetWidth;
+            var downLeft = div.offsetLeft;
+
+            window.onmousemove = function (evt) {
+                var e = evt || window.event;
+                var differX = e.clientX - downX;
+                div.style.width = downWith - differX + 'px';
+                div.style.left = downLeft + differX + 'px';
+                if(parseInt(div.style.width) <= 200){
+                    div.style.width = 200 + 'px';
+                    div.style.left = downLeft + 'px';
+                }
+                return false;
+            }
+            window.onmouseup = function () {
+                window.onmousemove = null;
+                window.onmouseup = null;
+                return false;
+
+            }
+            return false;
+        }
+
+    }
+
+    function resizeBottom() {
+        var bottom = document.querySelector('.bottom');
+        bottom.onmousedown = function (evt) {
+            var e = evt || window.event;
+            e.stopPropagation();
+            var downY = e.clientY;
+            var downHeight = div.offsetHeight;
+
+            window.onmousemove = function (evt) {
+                var e = evt || window.event;
+                var differY = e.clientY - downY;
+                div.style.height = downHeight + differY + 'px';
+                if(parseInt(div.style.height) <= 200){
+                    div.style.height = 200 + 'px';
+                }
+                return false;
+            }
+            window.onmouseup = function () {
+                window.onmousemove = null;
+                window.onmouseup = null;
+                return false;
+
+            }
+            return false;
+        }
+
+    }
+
+    function resizeTop() {
+        var top = document.querySelector('.top');
+        top.onmousedown = function (evt) {
+            var e = evt || window.event;
+            e.stopPropagation();
+            var downY = e.clientY;
+            var downHeight = div.offsetHeight;
+            var downTop = div.offsetTop;
+
+            window.onmousemove = function (evt) {
+                var e = evt || window.event;
+                var differY = e.clientY - downY;
+                div.style.height = downHeight - differY + 'px';
+                div.style.top = downTop + differY + 'px';
+                if(parseInt(div.style.height) <= 200){
+                    div.style.height = 200 + 'px';
+                    div.style.top = downTop + 'px';
+                }
+                return false;
+            }
+            window.onmouseup = function () {
+                window.onmousemove = null;
+                window.onmouseup = null;
+                return false;
+
+            }
+            return false;
+        }
+
+    }
+
+    function resizeRightTop() {
+        var rightTop = document.querySelector('.box .right_top');
+        rightTop.onmousedown = function (evt) {
+            console.log('onmousedown')
+            var e = evt || window.event;
+            e.stopPropagation();
+            var downX = e.clientX;
+            var downWith = div.offsetWidth;
+            var downY = e.clientY;
+            var downHeight = div.offsetHeight;
+            var downTop = div.offsetTop;
+            var downLeft = div.offsetLeft;
+
+            window.onmousemove = function (evt) {
+                var e = evt || window.event;
+                var differX = e.clientX - downX;
+                div.style.width = downWith + differX + 'px';
+                var differY = e.clientY - downY;
+                div.style.height = downHeight - differY + 'px';
+                div.style.top = downTop + differY + 'px';
+                if(parseInt(div.style.width) <= 200){
+                    div.style.width = 200 + 'px';
+                    div.style.left = downLeft + 'px';
+                }
+                if(parseInt(div.style.height) <= 200){
+                    div.style.height = 200 + 'px';
+                    div.style.top = downTop + 'px';
+                }
+                return false;
+            }
+            window.onmouseup = function () {
+                window.onmousemove = null;
+                window.onmouseup = null;
+                return false;
+
+            }
+            return false;
+        }
+
+    }
+
+    function resizeRightBottom() {
+        var rightBottom = document.querySelector('.box .right_bottom');
+        rightBottom.onmousedown = function (evt) {
+            console.log('onmousedown')
+            var e = evt || window.event;
+            e.stopPropagation();
+            var downX = e.clientX;
+            var downWith = div.offsetWidth;
+            var downY = e.clientY;
+            var downHeight = div.offsetHeight;
+            var downTop = div.offsetTop;
+            var downLeft = div.offsetLeft;
+
+
+            window.onmousemove = function (evt) {
+                var e = evt || window.event;
+                var differX = e.clientX - downX;
+                div.style.width = downWith + differX + 'px';
+                var differY = e.clientY - downY;
+                div.style.height = downHeight + differY + 'px';
+//                div.style.top = downTop + differY + 'px';
+                if(parseInt(div.style.width) <= 200){
+                    div.style.width = 200 + 'px';
+                    div.style.left = downLeft + 'px';
+                }
+                if(parseInt(div.style.height) <= 200){
+                    div.style.height = 200 + 'px';
+                    div.style.top = downTop + 'px';
+                }
+                return false;
+            }
+            window.onmouseup = function () {
+                window.onmousemove = null;
+                window.onmouseup = null;
+                return false;
+
+            }
+            return false;
+        }
+
+    }
+
+    function resizeLeftTop() {
+        var leftTop = document.querySelector('.box .left_top');
+        leftTop.onmousedown = function (evt) {
+            console.log('onmousedown')
+            var e = evt || window.event;
+            e.stopPropagation();
+            var downX = e.clientX;
+            var downWith = div.offsetWidth;
+            var downY = e.clientY;
+            var downHeight = div.offsetHeight;
+            var downTop = div.offsetTop;
+            var downLeft = div.offsetLeft;
+
+
+            window.onmousemove = function (evt) {
+                var e = evt || window.event;
+                var differX = e.clientX - downX;
+                div.style.width = downWith - differX + 'px';
+                var differY = e.clientY - downY;
+                div.style.height = downHeight - differY + 'px';
+                div.style.top = downTop + differY + 'px';
+                div.style.left = downLeft + differX + 'px';
+                if(parseInt(div.style.width) <= 200){
+                    div.style.width = 200 + 'px';
+                    div.style.left = downLeft + 'px';
+                }
+                if(parseInt(div.style.height) <= 200){
+                    div.style.height = 200 + 'px';
+                    div.style.top = downTop + 'px';
+                }
+                return false;
+            }
+            window.onmouseup = function () {
+                window.onmousemove = null;
+                window.onmouseup = null;
+                return false;
+
+            }
+            return false;
+        }
+
+    }
+    function resizeLeftBottom() {
+        var leftBottom = document.querySelector('.box .left_bottom');
+        leftBottom.onmousedown = function (evt) {
+            console.log('onmousedown')
+            var e = evt || window.event;
+            e.stopPropagation();
+            var downX = e.clientX;
+            var downWith = div.offsetWidth;
+            var downY = e.clientY;
+            var downHeight = div.offsetHeight;
+            var downTop = div.offsetTop;
+            var downLeft = div.offsetLeft;
+
+
+            window.onmousemove = function (evt) {
+                var e = evt || window.event;
+                var differX = e.clientX - downX;
+                div.style.width = downWith - differX + 'px';
+                var differY = e.clientY - downY;
+                div.style.height = downHeight + differY + 'px';
+//                div.style.top = downTop + differY + 'px';
+                div.style.left = downLeft + differX + 'px';
+                if(parseInt(div.style.width) <= 200){
+                    div.style.width = 200 + 'px';
+                    div.style.left = downLeft + 'px';
+                }
+                if(parseInt(div.style.height) <= 200){
+                    div.style.height = 200 + 'px';
+                    div.style.top = downTop + 'px';
+                }
+                return false;
+            }
+            window.onmouseup = function () {
+                window.onmousemove = null;
+                window.onmouseup = null;
+                return false;
+
+            }
+            return false;
+        }
+
+    }
+
+    resizeRight();
+    resizeLeft();
+    resizeBottom();
+    resizeTop();
+    resizeRightTop();
+    resizeRightBottom();
+    resizeLeftTop();
+    resizeLeftBottom();
+</script>
+</body>
+</html>

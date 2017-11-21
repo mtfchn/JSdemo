@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<head>
+<meta charset="utf-8" />
+<title>HTML5 canvas和javascript矩阵雨动画效果</title>
+<style type="text/css">
+/*basic reset*/
+* {margin: 0; padding: 0;}
+/*adding a black bg to the body to make things clearer*/
+body {background: black;}
+canvas {display: block;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script type="text/javascript">
+var c = document.getElementById("c");
+var ctx = c.getContext("2d");//画布上绘制的类型
+
+c.height = window.innerHeight;//窗口高度
+c.width = window.innerWidth;
+var chinese = "abcde";
+chinese = chinese.split("");//分隔字符串？
+
+var font_size = 15;//?
+
+
+var columns = c.width/font_size;//列
+//an array of drops - one per column  
+var drops = [];  //下降
+for(var x = 0; x < columns; x++)
+	drops[x] = 1;
+//drawing the characters
+function draw()
+{
+	ctx.fillStyle = "rgba(0,0,0, 0.05)";//填充样式，渐变0.05
+	ctx.fillRect(0, 0, c.width, c.height);//填充范围 context.fillRect(x,y,width,height)
+	//?上下填充
+	ctx.fillStyle = "#0F0"; //green 文字颜色
+	ctx.font = font_size + "px arial"; //字体大小+字体
+	//looping over drops循环下降
+	for(var i = 0; i < drops.length; i++)
+	{
+		var text = chinese[Math.floor(Math.random()*chinese.length)];//随机字母
+		ctx.fillText(text, i*font_size, drops[i]*font_size);//绘制文本 context.fillText(text,x,y,maxWidth) x,y：相对于画布的位置
+		
+		if(drops[i]*font_size > c.height && Math.random() > 0.95)
+			drops[i] = 0;
+		
+	drops[i]++;
+	}
+
+}
+setInterval(draw, 10);
+</script>
+</body>
+</html>

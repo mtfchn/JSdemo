@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			td{
+				width: 30px;
+				height: 30px;
+				background: #ccc;
+				border: 1px solid black;
+				line-height: 30px;
+				text-align: center;
+			}
+			/*td.mine{
+				background: red;
+			}*/
+			td.zero{
+				background: hotpink;
+			}
+			td.origin{
+				background: #ccc;
+			}
+			td.flag{
+				background: red;
+			}
+			td.question{
+				background: yellow;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="js/Grid.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Judge.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			new Judge({
+				w:9,
+				h:9,
+				max:9
+			})
+		</script>
+	</body>
+</html>

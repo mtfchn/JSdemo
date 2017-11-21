@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            overflow: hidden;
+        }
+        .ball {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .stick {
+            width: 100px;
+            height: 20px;
+            background: black;
+            position: absolute;
+            bottom: 30px;
+            left: 400px;
+        }
+        .brick {
+            float: left;
+            width: 50px;
+            height: 20px;
+            border-radius: 5px;
+            /*background: red;*/
+        }
+    </style>
+</head>
+<body>
+<div class="wall">
+    <div class="row">
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+    </div>
+    <div class="row">
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+    </div>
+    <div class="row">
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+    </div>
+    <div class="row">
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+    </div>
+    <div class="row">
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+    </div>
+ </div>
+<div class="ball"></div>
+<div class="stick"></div>
+<script>
+    var ball = document.querySelector('.ball');
+    var stick = document.querySelector('.stick');
+    var speedX = Math.floor(Math.random() * 5)+1;
+    var speedY = Math.floor(Math.random() * 5)+1;
+    var bricks = document.querySelectorAll('.brick');
+    var isStart = false;
+    var id;
+    function move() {
+        var left = ball.offsetLeft + speedX;
+        var top = ball.offsetTop + speedY;
+        ball.style.left = left + 'px';
+        ball.style.top = top + 'px';
+        if (left < 0) {
+            left = 0;
+            speedX *= -1;
+        }
+        if (top < 0) {
+            top = 0;
+            speedY *= -1;
+        }
+        if (left > window.innerWidth - ball.offsetWidth) {
+            left = window.innerWidth - ball.offsetWidth;
+            speedX *= -1;
+        }
+        if (top > window.innerHeight - ball.offsetHeight) {
+            top = window.innerHeight - ball.offsetHeight;
+            speedY *= -1;
+        }
+        if(checkCollide(ball,stick)){
+            speedY *= -1;
+            top = stick.offsetTop - ball.offsetHeight;
+        }
+        if(ball.offsetTop>stick.offsetTop){
+            alert('game over');
+            ball.offsetTop=stick.offsetTop;
+            clearInterval(id);
+        }
+        for(var i = 0;i<bricks.length;i++){
+            if(bricks[i].className.indexOf('broken')===-1 && checkCollide(ball,bricks[i])){
+                speedY *= -1;
+                bricks[i].style.opacity = 0;
+                bricks[i].className += ' broken';
+                var brokens = document.querySelectorAll('.broken');
+                if(brokens.length === bricks.length){
+                    alert('过关了')
+                    clearInterval(id);
+                }
+            }
+        }
+
+    }
+
+    function checkCollide(block1,block2) {
+        var center1 = {
+            x : block1.offsetLeft + block1.offsetWidth/2,
+            y : block1.offsetTop + block1.offsetHeight/2
+        }
+        var center2 = {
+            x : block2.offsetLeft + block2.offsetWidth/2,
+            y : block2.offsetTop + block2.offsetHeight/2
+        }
+        var distX = Math.abs(center1.x - center2.x);
+        var distY = Math.abs(center1.y - center2.y);
+        if(distX < (block1.offsetWidth+block2.offsetWidth)/2 && distY < (block1.offsetHeight+block2.offsetHeight)/2){
+            return true;
+        }
+        return false;
+    }
+
+    function stickMove() {
+        var stick = document.querySelector('.stick');
+        window.onmousemove = function(evt){
+            var e = evt || window.event;
+            stick.style.left = e.clientX - stick.offsetWidth/2 + 'px';
+
+            if(parseInt(stick.style.left) < 0){
+                stick.style.left = 0
+            }
+            if(parseInt(stick.style.left) > window.innerWidth - stick.offsetWidth ){
+                stick.style.left = window.innerWidth - stick.offsetWidth + 'px';
+            }
+            if(!isStart){
+                ball.style.left =stick.offsetLeft + (stick.offsetWidth -ball.offsetWidth )/2 + 'px';
+                ball.style.top = stick.offsetTop - ball.offsetHeight + 'px';
+            }
+
+        }
+        for(var i = 0;i < bricks.length;i++){
+            bricks[i].style.backgroundColor = randomColor();
+        }
+
+        window.onclick = function(){
+            start();
+        }
+    }
+
+    function randomColor(){
+        var r = Math.floor(Math.random()*256);
+        var g = Math.floor(Math.random()*256);
+        var b = Math.floor(Math.random()*256);
+        return 'rgb('+r+','+g+','+b+')';
+    }
+
+    function start() {
+        isStart = true;
+        clearInterval(id);
+        id = setInterval(function () {
+            move();
+        }, 2)
+    }
+
+    stickMove();
+
+</script>
+</body>
+</html>

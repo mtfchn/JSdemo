@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+</head>
+<body>
+全选<input type="checkbox" name="" class="all">
+
+<div>
+    1 <input type="checkbox" name=""><br>
+    2 <input type="checkbox" name=""><br>
+    3 <input type="checkbox" name=""><br>
+    4 <input type="checkbox" name=""><br>
+    5 <input type="checkbox" name=""><br>
+    6 <input type="checkbox" name=""><br>
+</div>
+
+<script type="text/javascript" src="./vendor/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    $('.all').change(function(){
+        var checked = $(this).prop('checked');
+        $('div').find('input').prop('checked',checked);
+    })
+    $('div').find('input').change(function(){
+        var checkedCount = $('div').find('input:checkbox:checked').length;
+        var allCount = $('div input').length;
+        $('.all').prop('checked',checkedCount===allCount);
+    })
+</script>
+</body>
+</html>

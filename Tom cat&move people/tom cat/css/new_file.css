@@ -1,0 +1,71 @@
+
+*{
+	margin: 0px;
+	padding: 0px;
+}
+html,body{
+	width: 100%;
+	height: 100%;
+}
+.content{
+	width: 50%;
+	height: 100%;
+	/*绝对定位 不占空间*/
+	position: absolute;
+	
+}
+.tom{
+	width: 100%;
+	height: 100%;
+	/*绝对定位 不占空间*/
+	position: absolute;
+}
+.scratch{
+	position: absolute;
+	top: 50%;
+	left: 60%;
+	width: 70px;
+	height: 70px;
+	/*层级问题，可改变层级 默认层级为0*/
+	z-index: 1;
+}
+.eat{
+	position: absolute;
+	top: 60%;
+	left: 60%;
+	width: 70px;
+	height: 70px;
+	z-index: 1;
+}
+.cymbal{
+	position: absolute;
+	top: 70%;
+	left: 60%;
+	width: 70px;
+	height: 70px;
+	z-index: 1;
+}
+.drink{
+	position: absolute;
+	top: 70%;
+	right: -40%;
+	width: 70px;
+	height: 70px;
+	z-index: 1;
+}
+.fart{
+	position: absolute;
+	top: 60%;
+	right: -40%;
+	width: 70px;
+	height: 70px;
+	z-index: 1;
+}
+.pie{
+	position: absolute;
+	top: 50%;
+	right: -40%;
+	width: 70px;
+	height: 70px;
+	z-index: 1;
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<style>
+	video{
+		width: 500px;height:375px;border: 10px solid #ccc;
+		/*display: none;*/
+	}
+    canvas{
+        border: 10px solid #ccc;
+    }
+		
+	</style>
+	
+	
+</head>
+<body>
+
+    <canvas width="500" height="375" id="can1"></canvas>
+	<canvas width="500" height="375" id="can2"></canvas>
+	<video></video>
+   
+	<script>
+    var canvas = document.getElementById("can1");
+    var v =canvas.getContext("2d");
+
+	var canvas2 = document.getElementById("can2");
+	var v2 =canvas2.getContext("2d");
+    navigator.getUserMedia = navigator.getUserMedia ||
+                         navigator.webkitGetUserMedia ||
+                         navigator.mozGetUserMedia;
+
+    if (navigator.getUserMedia) {
+	   navigator.getUserMedia({ video: { width: 500, height: 500 } },
+	      function(stream) {
+	      	var video = document.querySelector('video');
+	         video.srcObject = stream;
+
+	         video.onloadedmetadata = function(e) {
+	             video.play();
+				 setInterval(function(){drawCanvas(video)},2)
+				 setInterval(function(){haveMove(video)},2000)
+//				 haveMove(video);
+	         };
+	      },
+	      function(err) {
+	         console.log("The following error occurred: " + err.name);
+	      }
+	   );
+	} else {
+	   console.log("getUserMedia not supported");
+	}
+	function drawCanvas(video){
+		v.drawImage(video,0,0,500,375);
+		vData = v.getImageData(0,0,500,375);
+
+		vLength = vData.length;
+		vH = 375;
+		vW = 500;
+		var newVData = v2.createImageData(500,375);
+		newVData.data = [];
+
+		for(var i =0;i<vH;i++){
+			for(var j=0;j<vW;j++){
+				newVData.data[(i*500+j)*4] = vData.data[(i*500+(500-j))*4];
+				newVData.data[(i*500+j)*4+1] = vData.data[(i*500+(500-j))*4+1]
+				newVData.data[(i*500+j)*4+2] = vData.data[(i*500+(500-j))*4+2]
+				newVData.data[(i*500+j)*4+3] = vData.data[(i*500+(500-j))*4+3]
+			}
+		}
+
+		v2.putImageData(newVData,0,0);
+
+	}
+	function haveMove(video){
+		v.drawImage(video,0,0,500,375);
+		var proData = v.getImageData(0,0,500,375);
+		var nowData =new Image();
+		var x=0;
+
+		nowData.onload = function(){
+			console.log('加载好了')
+		}
+
+		setTimeout(function(){
+			nowData = v.getImageData(0,0,500,375);
+			for(var i =0;i<proData.data.length;i++){
+				if(Math.abs(proData.data[i]-nowData.data[i])>10) {
+					x++
+				}
+			}
+			console.log(x)
+
+
+			if(x>(proData.data.length/50)){
+				console.log("有人在动！！")
+			}
+
+		},1000)
+
+
+	}
+
+	</script>
+</body>
+</html>
