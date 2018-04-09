@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background: pink;
+        }
+    </style>
+</head>
+<body>
+<div>1</div>
+<div>2</div>
+<div>3</div>
+<div>4</div>
+<script src="vendor/jquery-3.2.1.min.js"></script>
+<script>
+    //自定义一个为元素随机颜色的插件
+    //$('div').randomColor();
+
+    //1.要用立即执行函数
+    //2.$.fn.extend()
+    //3.在函数中，要遍历jQuery对象
+    //4.返回this
+
+    (function ($) {
+        //保证在插件定义中，$永远是jQuery
+        //$.fn === jQuery.prototype
+        $.fn.extend({
+            randomColor: function () {
+                console.log('randomColor');
+                //遍历jQuery对象的所有元素
+                //this指向了这个jQuery对象
+                //遍历jQuery对象的方法：
+                function random() {
+                    var r = Math.floor(Math.random() * 256);
+                    var g = Math.floor(Math.random() * 256);
+                    var b = Math.floor(Math.random() * 256);
+
+                    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+                }
+
+                this.each(function (index, el) {
+//                    console.log(el.innerHTML);
+                    $(el).css({
+                        background: random()
+                    })
+                })
+
+//                return this;
+            }
+        })
+    })(jQuery)
+
+    $('div').randomColor().css({
+        cursor: 'pointer'
+    });
+</script>
+
+</body>
+</html>
